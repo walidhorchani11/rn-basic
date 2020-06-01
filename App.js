@@ -1,89 +1,73 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
+
+// import Cat from './components/Cat_Component';
+// import Add from './components/AddCat_Component';
 
 export default function App() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  const addGoalHandler = () => {
+    console.log(enteredGoal);
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      enteredGoal,
+    ]);
+    console.log(courseGoals);
+  };
+
+  const goalInputHandler = (enteredText) => {
+    setEnteredGoal(enteredText);
+  };
   return (
     <View style={styles.screen}>
-      <View
-        style={{
-          backgroundColor: 'red',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-        }}
-      >
-        <Text>12345</Text>
+      {/** le TextInput sera caché en haut, on peut ajouter padding -- voir layout props*/}
+      {/** en CSS on utilise  border-color , not supported in react native , on a borderColor */}
+      {/** cet view qui entoure le textInput et le button nous permet de les organiser */}
+      <View style={styles.partView}>
+        <TextInput
+          placeholder="course goal"
+          style={styles.textInput}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
+        />
+        <Button title="add" onPress={addGoalHandler} />
       </View>
-      <View
-        style={{
-          backgroundColor: 'blue',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          flex: 4,
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: '#DEB887',
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
-          <View style={{ backgroundColor: '#00FFFF' }}>
-            <Text>!!!!!</Text>
-          </View>
-          <View style={{ backgroundColor: '#FFF8DC' }}>
-            <Text>?????</Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: 'yellow',
-            flex: 1,
-            justifyContent: 'center',
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-            }}
-          >
-            <Button title="add" style={{ height: 100, width: 10 }} />
-          </View>
-          <View
-            style={{
-              backgroundColor: '#008B8B',
-              flex: 1,
-              justifyContent: 'center',
-            }}
-          >
-            <Button title="delete" />
-          </View>
-        </View>
+      <View>
+        <Text>List of Goals</Text>
       </View>
-      <View
-        style={{
-          backgroundColor: 'green',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
+      {/*  
+      <Image
+        source={{
+          uri: 'https://reactnative.dev/docs/assets/p_cat2.png',
         }}
-      >
-        <Text>3</Text>
+        style={{ width: 200, height: 200, borderTopRightRadius: 20 }}
+      />
+
+      <View style={{ backgroundColor: 'red' }}>
+        <Cat name="Mimi" />
+        <Cat name="Garaa" />
       </View>
+      <Add style={{ width: '100%' }} placeholder="helllo" /> */}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: 50,
-    flexDirection: 'column',
-    width: '100%',
-    height: 500,
-    backgroundColor: 'lightblue',
+  screen: { padding: 30, backgroundColor: 'yellow', height: 300 },
+  partView: {
+    flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'green',
+    height: 200,
+    padding: 10,
+  },
+  textInput: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    padding: 5,
+    width: '70%',
   },
 });
